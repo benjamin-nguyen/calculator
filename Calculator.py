@@ -7,17 +7,210 @@ import tkinter.messagebox
 root = Tk()
 root.wm_iconbitmap('CalculatorIcon.ico')
 root.title("Calculator")
-root.configure(background="SlateGray1")
+root.configure(background="white")
 root.resizable(width=False, height=False)
-root.geometry("480x620+0+0")
+root.geometry("311x368+0+0")
 
-calculator = Frame(root) 
+calculator = Frame(root, bg="gainsboro") 
 calculator.grid()
 
+class Calculator():
+  def __init__(self):
+    self.total = 0
+    self.current = ""
+    self.inputValue = True
+    self.checkSum = False
+    self.op=""
+    self.result = False
+
+  def enterNumber(self, num):
+    self.result = False
+    firstNum = displayText.get() # Value of current entry
+    secondNum = str(num) # Value of numPad button pressed
+    if self.inputValue:
+      self.current = secondNum
+      self.inputValue = False
+    else:
+      # If the entered number is a decimal: checks if there is another decimal in the entry (If there is, returns nothing)
+      # Otherwise, the entered number is appended to the current entry 
+      if secondNum == '.':
+        if secondNum in firstNum:
+          return
+      self.current = firstNum + secondNum
+    self.display(self.current)
+
+  def sumOfTotal(self):
+    self.result = True
+    self.current = float(self.current)
+    if self.checkSum:
+      self.validFunction()
+    else:
+      self.total = float(displayText.get())
+
+  def validFunction(self):
+    if self.op == "add":
+      self.total += self.current
+    if self.op == "sub":
+      self.total -= self.current
+    if self.op == "multiply":
+      self.total *= self.current
+    if self.op == "divide":
+      self.total /= self.current
+    if self.op == "mod":
+      self.total %= self.current
+    self.inputValue = True
+    self.checkSum = False
+    self.display(self.total)
+
+  def operation(self, op):
+    self.current = float(self.current)
+    if self.checkSum:
+      self.validFunction()
+    elif not self.result:
+      self.total = self.current
+      self.inputValue = True
+    self.checkSum = True
+    self.op = op
+    self.result = False
+
+  def clearEntry(self):
+    self.result = False
+    self.current = "0"
+    self.display(0)
+    self.inputValue = True
+
+  def clearAllEntry(self):
+    self.clearEntry
+    self.total = 0
+
+  def plusMinus(self):
+    self.result = False
+    self.current = -(float(displayText.get()))
+    self.display(self.current)
+
+  def squared(self):
+    self.result = False
+    self.current = math.sqrt(float(displayText.get()))
+    self.display(self.current)
+
+  def cos(self):
+    self.result = False
+    self.current = math.cos(math.radians(float(displayText.get())))
+    self.display(self.current)
+
+  def cosh(self):
+    self.result = False
+    self.current = math.cosh(math.radians(float(displayText.get())))
+    self.display(self.current)
+
+  def tan(self):
+    self.result = False
+    self.current = math.tan(math.radians(float(displayText.get())))
+    self.display(self.current)
+
+  def tanh(self):
+    self.result = False
+    self.current = math.tanh(math.radians(float(displayText.get())))
+    self.display(self.current)
+
+  def sin(self):
+    self.result = False
+    self.current = math.sin(math.radians(float(displayText.get())))
+    self.display(self.current)
+
+  def sinh(self):
+    self.result = False
+    self.current = math.sinh(math.radians(float(displayText.get())))
+    self.display(self.current)
+
+  def log(self):
+    self.result = False
+    self.current = math.log
+    self.display(self.current)
+
+  def exp(self):
+    self.result = False
+    self.current = math.exp
+    self.display(self.current)
+
+  def pi(self):
+    self.result = False
+    self.current = math.pi
+    self.display(self.current)
+
+  def tau(self):
+    self.result = False
+    self.current = math.tau
+    self.display(self.current)
+
+  def e(self):
+    self.result = False
+    self.current = math.e
+    self.display(self.current)
+
+
+  
+
+
+  def acosh(self):
+    self.result = False
+    self.current = math.acosh(float(displayText.get()))
+    self.display(self.current)
+
+  def asinh(self):
+    self.result = False
+    self.current = math.asinh(float(displayText.get()))
+    self.display(self.current)
+
+  def expm1(self):
+    self.result = False
+    self.current = math.expm1(float(displayText.get()))
+    self.display(self.current)
+
+  def lgamma(self):
+    self.result = False
+    self.current = math.lgamma(float(displayText.get()))
+    self.display(self.current)
+
+  def degrees(self):
+    self.result = False
+    self.current = math.degrees(float(displayText.get()))
+    self.display(self.current)
+
+  def log2(self):
+    self.result = False
+    self.current = math.log2(float(displayText.get()))
+    self.display(self.current)
+
+  def log10(self):
+    self.result = False
+    self.current = math.log10(float(displayText.get()))
+    self.display(self.current)
+
+  def log1p(self):
+    self.result = False
+    self.current = math.log1p(float(displayText.get()))
+    self.display(self.current)
+ 
+  
+
+  # for clearAllButton in (["CE"], ["C"]):
+  #   erase = calculator(self, TOP)
+  #   for char in clearAllButton:
+  #     button(erase, LEFT, char, lambda store)
+
+
+  def display(self, value):
+    # Clears previous entry text and displays entry text with number entered
+    displayText.delete(0, END)
+    displayText.insert(0, value)
+
+addedValue = Calculator()
+
 # Display
-display = Entry(calculator, font=('Arial', 15, 'bold'), bd=30, width=28, justify=RIGHT)
-display.grid(row=0, column=0, columnspan=4, pady=1)
-display.insert(0, "0")
+displayText = Entry(calculator, font=('Arial', 15, 'bold'), bd=0, width=27, justify=RIGHT, bg="light gray", relief=RIDGE)
+displayText.grid(row=0, column=0, columnspan=4, pady=0)
+displayText.insert(0, "0")
 
 # Standard Calculator Buttons
 numPad = "789456123"
@@ -26,65 +219,84 @@ i=0
 
 for j in range(2,5):
   for k in range(3):
-    button.append(Button(calculator, width=6, height=2, font=('Arial', 15, 'bold'), bd=4,  bg="SlateGray1", text=numPad[i]))
-    button[i].grid(row=j, column=k, pady=1)
+    button.append(Button(calculator, width=6, height=2, font=('Arial', 15, 'bold'), bd=0,  bg="SlateGray3", text=numPad[i]))
+    button[i].grid(row=j, column=k, pady=0)
+    button[i]["command"] = lambda x = numPad[i]: addedValue.enterNumber(x)
     i+=1
     
-clearEntryButton = Button(calculator, text=chr(67)+chr(69), width=6, height=2, font=('Arial', 15, 'bold'), bd=4, bg="SlateGray3").grid(row=1, column=0, pady=1)
+# Buttons
 
-clearAllButton = Button(calculator, text=chr(67), width=6, height=2, font=('Arial', 15, 'bold'), bd=4, bg="SlateGray3").grid(row=1, column=1, pady=1)
+clearEntryButton = Button(calculator, text=chr(67)+chr(69), width=6, height=2, font=('Arial', 15, 'bold'), bd=0, bg="SlateGray4", command = addedValue.clearEntry).grid(row=1, column=0, pady=0)
 
-sqrtButton = Button(calculator, text=chr(8730), width=6, height=2, font=('Arial', 15, 'bold'), bd=4, bg="SlateGray3").grid(row=1, column=2, pady=1)
+clearAllButton = Button(calculator, text=chr(67), width=6, height=2, font=('Arial', 15, 'bold'), bd=0, bg="SlateGray4", command = addedValue.clearAllEntry).grid(row=1, column=1, pady=0)
 
-divideButton = Button(calculator, text=chr(247), width=6, height=2, font=('Arial', 15, 'bold'), bd=4, bg="SlateGray3").grid(row=1, column=3, pady=1)
+sqrtButton = Button(calculator, text=chr(8730), width=6, height=2, font=('Arial', 15, 'bold'), bd=0, bg="SlateGray4", command = addedValue.squared).grid(row=1, column=2, pady=0)
 
-multiplyButton = Button(calculator, text=chr(215), width=6, height=2, font=('Arial', 15, 'bold'), bd=4, bg="SlateGray3").grid(row=2, column=3, pady=1)
+divideButton = Button(calculator, text=chr(247), width=6, height=2, font=('Arial', 15, 'bold'), bd=0, bg="SlateGray4", command = lambda: addedValue.operation("divide")).grid(row=1, column=3, pady=0)
 
-minusButton = Button(calculator, text=chr(45), width=6, height=2, font=('Arial', 15, 'bold'), bd=4, bg="SlateGray3").grid(row=3, column=3, pady=1)
+multiplyButton = Button(calculator, text=chr(215), width=6, height=2, font=('Arial', 15, 'bold'), bd=0, bg="SlateGray4", command = lambda: addedValue.operation("multiply")).grid(row=2, column=3, pady=0)
 
-plusButton = Button(calculator, text=chr(43), width=6, height=2, font=('Arial', 15, 'bold'), bd=4, bg="SlateGray3").grid(row=4, column=3, pady=1)
+minusButton = Button(calculator, text=chr(45), width=6, height=2, font=('Arial', 15, 'bold'), bd=0, bg="SlateGray4", command = lambda: addedValue.operation("sub")).grid(row=3, column=3, pady=0)
 
-pmButton = Button(calculator, text=chr(177), width=6, height=2, font=('Arial', 15, 'bold'), bd=4, bg="SlateGray3").grid(row=5, column=0, pady=1)
+plusButton = Button(calculator, text=chr(43), width=6, height=2, font=('Arial', 15, 'bold'), bd=0, bg="SlateGray4", command = lambda: addedValue.operation("add")).grid(row=4, column=3, pady=0)
 
-zeroButton = Button(calculator, text=chr(48), width=6, height=2, font=('Arial', 15, 'bold'), bd=4, bg="SlateGray1").grid(row=5, column=1, pady=1)
+pmButton = Button(calculator, text=chr(177), width=6, height=2, font=('Arial', 15, 'bold'), bd=0, bg="SlateGray4", command = addedValue.plusMinus).grid(row=5, column=0, pady=0)
 
-dotButton = Button(calculator, text=chr(46), width=6, height=2, font=('Arial', 15, 'bold'), bd=4, bg="SlateGray3").grid(row=5, column=2, pady=1)
+zeroButton = Button(calculator, text=chr(48), width=6, height=2, font=('Arial', 15, 'bold'), bd=0, bg="SlateGray3", command = lambda: addedValue.enterNumber(0)).grid(row=5, column=1, pady=0)
 
-equalsButton = Button(calculator, text=chr(61), width=6, height=2, font=('Arial', 15, 'bold'), bd=4, bg="orange").grid(row=5, column=3, pady=1)
+dotButton = Button(calculator, text=chr(46), width=6, height=2, font=('Arial', 15, 'bold'), bd=0, bg="SlateGray4", command = lambda: addedValue.enterNumber('.')).grid(row=5, column=2, pady=0)
+
+equalsButton = Button(calculator, text=chr(61), width=6, height=2, font=('Arial', 15, 'bold'), bd=0, bg="orange",  command = addedValue.sumOfTotal).grid(row=5, column=3, pady=0)
 
 # Scientific Calculator Buttons
-numPad = "789456123"
-button = []
-i=0
-
-for j in range(2,5):
-  for k in range(3):
-    button.append(Button(calculator, width=6, height=2, font=('Arial', 15, 'bold'), bd=4,  bg="SlateGray1", text=numPad[i]))
-    button[i].grid(row=j, column=k, pady=1)
-    i+=1
     
-clearEntryButton = Button(calculator, text=chr(67)+chr(69), width=6, height=2, font=('Arial', 15, 'bold'), bd=4, bg="SlateGray3").grid(row=1, column=0, pady=1)
+piButton = Button(calculator, text=chr(960), width=6, height=2, font=('Arial', 15, 'bold'), bd=0, bg="SlateGray4", command = addedValue.pi).grid(row=1, column=5, pady=0)
 
-clearAllButton = Button(calculator, text=chr(67), width=6, height=2, font=('Arial', 15, 'bold'), bd=4, bg="SlateGray3").grid(row=1, column=1, pady=1)
+sinButton = Button(calculator, text="sin", width=6, height=2, font=('Arial', 15, 'bold'), bd=0, bg="SlateGray4", command = addedValue.sin).grid(row=1, column=6, pady=0)
 
-sqrtButton = Button(calculator, text=chr(8730), width=6, height=2, font=('Arial', 15, 'bold'), bd=4, bg="SlateGray3").grid(row=1, column=2, pady=1)
+cosButton = Button(calculator, text="cos", width=6, height=2, font=('Arial', 15, 'bold'), bd=0, bg="SlateGray4", command = addedValue.cos).grid(row=1, column=7, pady=0)
 
-divideButton = Button(calculator, text=chr(247), width=6, height=2, font=('Arial', 15, 'bold'), bd=4, bg="SlateGray3").grid(row=1, column=3, pady=1)
+tanButton = Button(calculator, text="tan", width=6, height=2, font=('Arial', 15, 'bold'), bd=0, bg="SlateGray4", command = addedValue.tan).grid(row=1, column=8, pady=0)
 
-multiplyButton = Button(calculator, text=chr(215), width=6, height=2, font=('Arial', 15, 'bold'), bd=4, bg="SlateGray3").grid(row=2, column=3, pady=1)
 
-minusButton = Button(calculator, text=chr(45), width=6, height=2, font=('Arial', 15, 'bold'), bd=4, bg="SlateGray3").grid(row=3, column=3, pady=1)
+twoPiButton = Button(calculator, text="2"+chr(960), width=6, height=2, font=('Arial', 15, 'bold'), bd=0, bg="SlateGray4", command = addedValue.pi).grid(row=2, column=5, pady=0)
 
-plusButton = Button(calculator, text=chr(43), width=6, height=2, font=('Arial', 15, 'bold'), bd=4, bg="SlateGray3").grid(row=4, column=3, pady=1)
+sinhButton = Button(calculator, text="sinh", width=6, height=2, font=('Arial', 15, 'bold'), bd=0, bg="SlateGray3", command = addedValue.sinh).grid(row=2, column=6, pady=0)
 
-pmButton = Button(calculator, text=chr(177), width=6, height=2, font=('Arial', 15, 'bold'), bd=4, bg="SlateGray3").grid(row=5, column=0, pady=1)
+coshButton = Button(calculator, text="cosh", width=6, height=2, font=('Arial', 15, 'bold'), bd=0, bg="SlateGray3", command = addedValue.cosh).grid(row=2, column=7, pady=0)
 
-zeroButton = Button(calculator, text=chr(48), width=6, height=2, font=('Arial', 15, 'bold'), bd=4, bg="SlateGray1").grid(row=5, column=1, pady=1)
+tanhButton = Button(calculator, text="tanh", width=6, height=2, font=('Arial', 15, 'bold'), bd=0, bg="SlateGray3", command = addedValue.tanh).grid(row=2, column=8, pady=0)
 
-dotButton = Button(calculator, text=chr(46), width=6, height=2, font=('Arial', 15, 'bold'), bd=4, bg="SlateGray3").grid(row=5, column=2, pady=1)
 
-equalsButton = Button(calculator, text=chr(61), width=6, height=2, font=('Arial', 15, 'bold'), bd=4, bg="orange").grid(row=5, column=3, pady=1)
+logButton = Button(calculator, text="log", width=6, height=2, font=('Arial', 15, 'bold'), bd=0, bg="SlateGray4", command = addedValue.log).grid(row=3, column=5, pady=0)
 
+expButton = Button(calculator, text="exp", width=6, height=2, font=('Arial', 15, 'bold'), bd=0, bg="SlateGray3", command = addedValue.exp).grid(row=3, column=6, pady=0)
+
+modButton = Button(calculator, text="mod", width=6, height=2, font=('Arial', 15, 'bold'), bd=0, bg="SlateGray3", command = lambda: addedValue.operation("mod")).grid(row=3, column=7, pady=0)
+
+eButton = Button(calculator, text="e", width=6, height=2, font=('Arial', 15, 'bold'), bd=0, bg="SlateGray3", command = addedValue.e).grid(row=3, column=8, pady=0)
+
+
+log2Button = Button(calculator, text="log2", width=6, height=2, font=('Arial', 15, 'bold'), bd=0, bg="SlateGray4", command = addedValue.log2).grid(row=4, column=5, pady=0)
+
+degButton = Button(calculator, text="deg", width=6, height=2, font=('Arial', 15, 'bold'), bd=0, bg="SlateGray3", command = addedValue.degrees).grid(row=4, column=6, pady=0)
+
+acoshButton = Button(calculator, text="acosh", width=6, height=2, font=('Arial', 15, 'bold'), bd=0, bg="SlateGray3", command = addedValue.acosh).grid(row=4, column=7, pady=0)
+
+asinhButton = Button(calculator, text="asinh", width=6, height=2, font=('Arial', 15, 'bold'), bd=0, bg="SlateGray3", command = addedValue.asinh).grid(row=4, column=8, pady=0)
+
+
+log10Button = Button(calculator, text="log10", width=6, height=2, font=('Arial', 15, 'bold'), bd=0, bg="SlateGray4", command = addedValue.log10).grid(row=5, column=5, pady=0)
+
+log1pButton = Button(calculator, text="log1p", width=6, height=2, font=('Arial', 15, 'bold'), bd=0, bg="SlateGray4", command = addedValue.log1p).grid(row=5, column=6, pady=0)
+
+expm1Button = Button(calculator, text="expm1", width=6, height=2, font=('Arial', 15, 'bold'), bd=0, bg="SlateGray4", command = addedValue.expm1).grid(row=5, column=7, pady=0)
+
+lgammaButton = Button(calculator, text="lgamma", width=6, height=2, font=('Arial', 15, 'bold'), bd=0, bg="SlateGray4", command = addedValue.lgamma).grid(row=5, column=8, pady=0)
+
+
+scientificDisplayTitle = Label(calculator, text="Scientific Calculator", font=('Helvetica', 20, 'bold', 'italic'), bg="gray", padx=26, justify=CENTER)
+scientificDisplayTitle.grid(row=0, column=5, columnspan=4)
 
 # Menu & Functions
 def exit():
@@ -95,11 +307,13 @@ def exit():
 
 def standardCalc():
   root.resizable(width=False, height=False)
-  root.geometry("944x568+0+0")
+  root.geometry("311x348+0+0")
 
 def scientificCalc():
   root.resizable(width=False, height=False)
-  root.geometry("480x620+0+0")
+
+  root.geometry("624x348+0+0")
+
 
 menuBar = Menu(calculator)
 
