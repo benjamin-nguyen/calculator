@@ -590,7 +590,6 @@ lgammaButton = Button(
     command=addedValue.lgamma,
 ).grid(row=5, column=8, pady=0)
 
-
 scientificDisplayTitle = Label(
     calculator,
     text="Scientific Calculator",
@@ -617,7 +616,6 @@ def standardCalc():
 
 def scientificCalc():
     root.resizable(width=False, height=False)
-
     root.geometry("624x348+0+0")
 
 
