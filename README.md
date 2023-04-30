@@ -23,5 +23,5 @@ This is a Python-based calculator application with a graphical user interface (G
 5. Use the clear button (CE) to clear the last entry and the all clear button (C) to clear the entire display.
 6. The result will be displayed in the main display area of the calculator.
 
-# Contributors
+## Contributors
 This application was developed by Benjamin Nguyen.
