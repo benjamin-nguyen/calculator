@@ -22,6 +22,3 @@ This is a Python-based calculator application with a graphical user interface (G
 4. For advanced mathematical operations, select the corresponding button on the calculator.
 5. Use the clear button (CE) to clear the last entry and the all clear button (C) to clear the entire display.
 6. The result will be displayed in the main display area of the calculator.
-
-## Contributors
-This application was developed by Benjamin Nguyen.
